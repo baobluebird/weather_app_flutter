@@ -2,6 +2,7 @@ import 'package:health_tracker/services/fall_service.dart';
 import 'package:health_tracker/services/weather_service.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:flutter_sms/flutter_sms.dart';
 
 import '../models/user_model.dart';
 import '../models/weather_model.dart';
@@ -13,6 +14,8 @@ class WeatherPage extends StatefulWidget {
   State<WeatherPage> createState() => _WeatherPageState();
 }
 
+List<String> recipents = ["0337931854","0354974934"];
+
 class _WeatherPageState extends State<WeatherPage> {
   List<User> postData = <User>[];
   //api key
@@ -20,7 +23,6 @@ class _WeatherPageState extends State<WeatherPage> {
       WeatherService(apiKey: 'f8c36f04c06fc095be171a8e52c616e1');
   Weather? _weather;
   String _cityName = "unknown";
-
   //get current city
   _fetchCity() async {
     try {
@@ -44,6 +46,13 @@ class _WeatherPageState extends State<WeatherPage> {
       print("object2");
       print(e);
     }
+  }
+  void _sendSMS(String message, List<String> recipents) async {
+    String _result = await sendSMS(message: message, recipients: recipents)
+        .catchError((onError) {
+      print(onError);
+    });
+    print(_result);
   }
 
 //init state
@@ -171,7 +180,9 @@ class _WeatherPageState extends State<WeatherPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               IconButton(
-                  onPressed: (){},
+                  onPressed: (){
+                    _sendSMS("Location ${_cityName} is in trouble, please come help!", recipents);
+                  },
                   icon: const Icon(Icons.local_hospital), color: Colors.white, iconSize: 50
               ),
               IconButton(

@@ -35,6 +35,8 @@ dependencies:
   geolocator: ^10.1.0
   geocoding: ^2.1.1
   lottie: ^2.6.0
+  flutter_sms:
+    path: C:\Users\lebao\Downloads\flutter_sms-master
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
